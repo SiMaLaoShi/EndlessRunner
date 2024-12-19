@@ -1,0 +1,16 @@
+<linker>
+  /// <summary>
+  ///  prevent the module to be culled.
+  ///
+  </summary>
+  <assembly fullname="UnityEngine.TextureManagerModule">
+    <type fullname="UnityEngine.TextureManager" preserve="all"/>
+  </assembly>
+	<assembly fullname="UnityEngine">
+		<type fullname="UnityEngine.Animator" preserve="all" />
+		<type fullname="UnityEngine.MeshRenderer" preserve="all" />
+		<type fullname="UnityEngine.SkinnedMeshRenderer" preserve="all" />
+		<type fullname="UnityEngine.MeshFilter" preserve="all" />
+		<type fullname="UnityEngine.Advertisements" preserve="all" />
+	</assembly>
+</linker>
