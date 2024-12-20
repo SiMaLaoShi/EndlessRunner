@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,6 +66,11 @@ public class LoadoutState : AState
     protected int k_UILayer;
     protected readonly Quaternion k_FlippedYAxisRotation = Quaternion.Euler (0f, 180f, 0f);
 
+    private void Awake()
+    {
+	    Enter(null);
+    }
+
     public override void Enter(AState from)
     {
         inventoryCanvas.gameObject.SetActive(true);
@@ -75,6 +81,8 @@ public class LoadoutState : AState
 
         k_UILayer = LayerMask.NameToLayer("UI");
 
+        skyMeshFilter = GameObject.Find("/UICamera/Background").GetComponent<MeshFilter>();
+        UIGroundFilter = GameObject.Find("/UICamera/Background/BackgroundCircle").GetComponent<MeshFilter>();
         skyMeshFilter.gameObject.SetActive(true);
         UIGroundFilter.gameObject.SetActive(true);
 
@@ -87,10 +95,15 @@ public class LoadoutState : AState
             StartCoroutine(MusicPlayer.instance.RestartAllStems());
         }
 
-        runButton.interactable = false;
-        runButton.GetComponentInChildren<Text>().text = "Loading...";
+        // runButton.interactable = false;
+        // runButton.GetComponentInChildren<Text>().text = "Loading...";
 
         Refresh();
+    }
+
+    public void OnDisable()
+    {
+	    Exit(null);
     }
 
     public override void Exit(AState to)
@@ -137,15 +150,15 @@ public class LoadoutState : AState
 
     public override void Tick()
     {
-        if (!runButton.interactable)
-        {
-            bool interactable = ThemeDatabase.loaded && CharacterDatabase.loaded;
-            if(interactable)
-            {
-                runButton.interactable = true;
-                runButton.GetComponentInChildren<Text>().text = "Run!";
-            }
-        }
+        // if (!runButton.interactable)
+        // {
+        //     bool interactable = ThemeDatabase.ThemeData != null && CharacterDatabase.loaded;
+        //     if(interactable)
+        //     {
+        //         runButton.interactable = true;
+        //         runButton.GetComponentInChildren<Text>().text = "Run!";
+        //     }
+        // }
 
         if(m_Character != null)
         {
@@ -205,7 +218,6 @@ public class LoadoutState : AState
 
         while (t == null)
         {
-            t = ThemeDatabase.GetThemeData(PlayerData.instance.themes[PlayerData.instance.usedTheme]);
             yield return null;
         }
 
@@ -228,7 +240,8 @@ public class LoadoutState : AState
             GameObject newChar = null;
             while (newChar == null)
             {
-                Character c = CharacterDatabase.GetCharacter(PlayerData.instance.characters[PlayerData.instance.usedCharacter]);
+                // Character c = CharacterDatabase.GetCharacter(PlayerData.instance.characters[PlayerData.instance.usedCharacter]);
+                Character c = CharacterDatabase.Character;
 
                 if (c != null)
                 {
@@ -359,11 +372,8 @@ public class LoadoutState : AState
             PlayerData.instance.ftueLevel = 2;
             PlayerData.instance.Save();
         }
-
-#if UNITY_ANALYTICS
-        Analytics.CustomEvent("game_start");
-#endif
-        manager.SwitchState("Game");
+        
+        GameEventDefine.GameIdleToLoadingEvent.SendEventMessage();
     }
 
 	public void Openleaderboard()

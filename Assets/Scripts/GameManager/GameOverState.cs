@@ -9,7 +9,7 @@ using UnityEngine.Analytics;
 using System.Collections.Generic;
  
 /// <summary>
-/// state pushed on top of the GameManager when the player dies.
+/// state pushed on top of the YooGameManager when the player dies.
 /// </summary>
 public class GameOverState : AState
 {

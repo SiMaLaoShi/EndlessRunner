@@ -14,38 +14,38 @@ public class ShopCharacterList : ShopList
             Destroy(t.gameObject);
         }
 
-        foreach(KeyValuePair<string, Character> pair in CharacterDatabase.dictionary)
-        {
-            Character c = pair.Value;
-            if (c != null)
-            {
-                GameObject newEntry = Instantiate(prefabItem);
-                newEntry.transform.SetParent(listRoot, false);
-
-                ShopItemListItem itm = newEntry.GetComponent<ShopItemListItem>();
-
-				itm.icon.sprite = c.icon;
-                itm.nameText.text = c.characterName;
-				itm.pricetext.text = c.cost.ToString();
-
-				itm.buyButton.image.sprite = itm.buyButtonSprite;
-
-				if (c.premiumCost > 0)
-				{
-					itm.premiumText.transform.parent.gameObject.SetActive(true);
-					itm.premiumText.text = c.premiumCost.ToString();
-				}
-				else
-				{
-					itm.premiumText.transform.parent.gameObject.SetActive(false);
-				}
-
-				itm.buyButton.onClick.AddListener(delegate () { Buy(c); });
-
-				m_RefreshCallback += delegate() { RefreshButton(itm, c); };
-				RefreshButton(itm, c);
-            }
-        }
+    //     foreach(KeyValuePair<string, Character> pair in CharacterDatabase.dictionary)
+    //     {
+    //         Character c = pair.Value;
+    //         if (c != null)
+    //         {
+    //             GameObject newEntry = Instantiate(prefabItem);
+    //             newEntry.transform.SetParent(listRoot, false);
+    //
+    //             ShopItemListItem itm = newEntry.GetComponent<ShopItemListItem>();
+    //
+				// itm.icon.sprite = c.icon;
+    //             itm.nameText.text = c.characterName;
+				// itm.pricetext.text = c.cost.ToString();
+    //
+				// itm.buyButton.image.sprite = itm.buyButtonSprite;
+    //
+				// if (c.premiumCost > 0)
+				// {
+				// 	itm.premiumText.transform.parent.gameObject.SetActive(true);
+				// 	itm.premiumText.text = c.premiumCost.ToString();
+				// }
+				// else
+				// {
+				// 	itm.premiumText.transform.parent.gameObject.SetActive(false);
+				// }
+    //
+				// itm.buyButton.onClick.AddListener(delegate () { Buy(c); });
+    //
+				// m_RefreshCallback += delegate() { RefreshButton(itm, c); };
+				// RefreshButton(itm, c);
+    //         }
+        // }
     }
 
 	protected void RefreshButton(ShopItemListItem itm, Character c)

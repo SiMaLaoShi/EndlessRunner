@@ -35,7 +35,6 @@ public class ShopUI : MonoBehaviour
         PlayerData.Create();
 
         consumableDatabase.Load();
-        AssetBundlesDatabaseHandler.Load();
 
 #if UNITY_ANALYTICS
         Analytics.CustomEvent("store_opened", new Dictionary<string, object>
@@ -90,7 +89,7 @@ public class ShopUI : MonoBehaviour
 	public void CloseScene()
 	{
         SceneManager.UnloadSceneAsync("shop");
-	    LoadoutState loadoutState = GameManager.instance.topState as LoadoutState;
+	    LoadoutState loadoutState = MyGameManager.instance.topState as LoadoutState;
 	    if(loadoutState != null)
         {
             loadoutState.Refresh();

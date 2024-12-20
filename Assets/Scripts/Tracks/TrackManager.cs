@@ -163,7 +163,8 @@ public class TrackManager : MonoBehaviour
             characterController.gameObject.SetActive(true);
 
             // Spawn the player
-            Character player = Instantiate(CharacterDatabase.GetCharacter(PlayerData.instance.characters[PlayerData.instance.usedCharacter]), Vector3.zero, Quaternion.identity);
+            // Character player = Instantiate(CharacterDatabase.GetCharacter(PlayerData.instance.characters[PlayerData.instance.usedCharacter]), Vector3.zero, Quaternion.identity);
+            Character player = Instantiate(CharacterDatabase.Character, Vector3.zero, Quaternion.identity);
 			player.transform.SetParent(characterController.characterCollider.transform, false);
 			Camera.main.transform.SetParent(characterController.transform, true);
 
@@ -176,7 +177,8 @@ public class TrackManager : MonoBehaviour
 			characterController.Init();
 			characterController.CheatInvincible(invincible);
 
-            m_CurrentThemeData = ThemeDatabase.GetThemeData(PlayerData.instance.themes[PlayerData.instance.usedTheme]);
+            // m_CurrentThemeData = ThemeDatabase.GetThemeData(PlayerData.instance.themes[PlayerData.instance.usedTheme]);
+            m_CurrentThemeData = ThemeDatabase.ThemeData;
 			m_CurrentZone = 0;
 			m_CurrentZoneDistance = 0;
 

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using YooAsset;
 
 /// <summary>
 /// Pushed on top of the GameManager during gameplay. Takes care of initializing all the UI and start the TrackManager
@@ -83,6 +84,26 @@ public class GameState : AState
         }
 	}
 
+    private void Awake()
+    {
+	    var handle = YooAssets.LoadAssetAsync<GameObject>("Assets/Prefabs/Powerup/TrackManager.prefab");
+	    handle.Completed += assetHandle =>
+	    {
+		    trackManager = handle.InstantiateSync().GetComponent<TrackManager>();
+		    Enter(null);
+	    };
+    }
+
+    private void OnDisable()
+    {
+	    Exit(null);
+    }
+
+    private void Update()
+    {
+	    Tick();
+    }
+
     public override void Exit(AState to)
     {
         canvas.gameObject.SetActive(false);
@@ -103,7 +124,7 @@ public class GameState : AState
 
     public override void Tick()
     {
-		if (m_Finished)
+		if (m_Finished || null == trackManager)
 			return;
 
         CharacterInputController chrCtrl = trackManager.characterController;

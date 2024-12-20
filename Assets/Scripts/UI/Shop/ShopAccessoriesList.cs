@@ -17,48 +17,48 @@ public class ShopAccessoriesList : ShopList
             Destroy(t.gameObject);
         }
 
-        foreach (KeyValuePair<string, Character> pair in CharacterDatabase.dictionary)
-        {
-            Character c = pair.Value;
-            if (c != null && c.accessories !=null && c.accessories.Length > 0)
-            {
-                GameObject header = Instantiate(headerPrefab);
-                header.transform.SetParent(listRoot, false);
-                ShopItemListItem itmHeader = header.GetComponent<ShopItemListItem>();
-                itmHeader.nameText.text = c.characterName;
-
-                for (int i = 0; i < c.accessories.Length; ++i)
-                {
-                    CharacterAccessories accessory = c.accessories[i];
-                    GameObject newEntry = Instantiate(prefabItem);
-                    newEntry.transform.SetParent(listRoot, false);
-
-                    ShopItemListItem itm = newEntry.GetComponent<ShopItemListItem>();
-
-                    string compoundName = c.characterName + ":" + accessory.accessoryName;
-
-					itm.nameText.text = accessory.accessoryName;
-					itm.pricetext.text = accessory.cost.ToString();
-					itm.icon.sprite = accessory.accessoryIcon;
-					itm.buyButton.image.sprite = itm.buyButtonSprite;
-
-					if (accessory.premiumCost > 0)
-					{
-						itm.premiumText.transform.parent.gameObject.SetActive(true);
-						itm.premiumText.text = accessory.premiumCost.ToString();
-					}
-					else
-					{
-						itm.premiumText.transform.parent.gameObject.SetActive(false);
-					}
-
-                    itm.buyButton.onClick.AddListener(delegate () { Buy(compoundName, accessory.cost, accessory.premiumCost); });
-
-					m_RefreshCallback += delegate () { RefreshButton(itm, accessory, compoundName); };
-					RefreshButton(itm, accessory, compoundName);
-				}
-            }
-        }
+    //     foreach (KeyValuePair<string, Character> pair in CharacterDatabase.dictionary)
+    //     {
+    //         Character c = pair.Value;
+    //         if (c != null && c.accessories !=null && c.accessories.Length > 0)
+    //         {
+    //             GameObject header = Instantiate(headerPrefab);
+    //             header.transform.SetParent(listRoot, false);
+    //             ShopItemListItem itmHeader = header.GetComponent<ShopItemListItem>();
+    //             itmHeader.nameText.text = c.characterName;
+    //
+    //             for (int i = 0; i < c.accessories.Length; ++i)
+    //             {
+    //                 CharacterAccessories accessory = c.accessories[i];
+    //                 GameObject newEntry = Instantiate(prefabItem);
+    //                 newEntry.transform.SetParent(listRoot, false);
+    //
+    //                 ShopItemListItem itm = newEntry.GetComponent<ShopItemListItem>();
+    //
+    //                 string compoundName = c.characterName + ":" + accessory.accessoryName;
+    //
+				// 	itm.nameText.text = accessory.accessoryName;
+				// 	itm.pricetext.text = accessory.cost.ToString();
+				// 	itm.icon.sprite = accessory.accessoryIcon;
+				// 	itm.buyButton.image.sprite = itm.buyButtonSprite;
+    //
+				// 	if (accessory.premiumCost > 0)
+				// 	{
+				// 		itm.premiumText.transform.parent.gameObject.SetActive(true);
+				// 		itm.premiumText.text = accessory.premiumCost.ToString();
+				// 	}
+				// 	else
+				// 	{
+				// 		itm.premiumText.transform.parent.gameObject.SetActive(false);
+				// 	}
+    //
+    //                 itm.buyButton.onClick.AddListener(delegate () { Buy(compoundName, accessory.cost, accessory.premiumCost); });
+    //
+				// 	m_RefreshCallback += delegate () { RefreshButton(itm, accessory, compoundName); };
+				// 	RefreshButton(itm, accessory, compoundName);
+				// }
+    //         }
+    //     }
     }
 
 	protected void RefreshButton(ShopItemListItem itm, CharacterAccessories accessory, string compoundName)
